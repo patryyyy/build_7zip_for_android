@@ -24,7 +24,7 @@ PROGPATH_STATIC = $(O)/$(PROG)s
 
 
 ifneq ($(CC), xlc)
-CFLAGS_WARN_WALL = -Werror -Wall -Wextra
+CFLAGS_WARN_WALL = -Wall -Wextra
 endif
 
 # for object file
@@ -34,7 +34,8 @@ CFLAGS_BASE_LIST = -c
 # CFLAGS_BASE_LIST = -S
 CFLAGS_BASE = -O2 $(CFLAGS_BASE_LIST) $(CFLAGS_WARN_WALL) $(CFLAGS_WARN) \
  -DNDEBUG -D_REENTRANT -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
- -fPIC
+ -fPIC \
+ $(CFLAGS_ANDROID_NDK)
 
 FLAGS_FLTO = -ffunction-sections
 FLAGS_FLTO = -flto
@@ -87,7 +88,7 @@ SHARED_EXT=.dll
 LDFLAGS = -shared -DEF $(DEF_FILE) $(LDFLAGS_STATIC)
 else
 SHARED_EXT=.so
-LDFLAGS = -shared -fPIC $(LDFLAGS_STATIC)
+LDFLAGS = -shared -fPIC $(LDFLAGS_STATIC) $(LDFLAGS_ANDROID_NDK)
 CC_SHARED=-fPIC
 endif
 
@@ -142,7 +143,7 @@ DEL_OBJ_EXE = -$(RM) $(PROGPATH) $(PROGPATH_STATIC) $(OBJS)
 
 # LOCAL_LIBS=-lpthread
 # LOCAL_LIBS_DLL=$(LOCAL_LIBS) -ldl
-LIB2 = -lpthread -ldl
+LIB2 = -ldl
 
 
 endif
